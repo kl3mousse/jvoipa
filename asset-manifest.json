@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/jvoipa/static/css/main.a617e044.chunk.css",
-    "main.js": "/jvoipa/static/js/main.51626060.chunk.js",
-    "main.js.map": "/jvoipa/static/js/main.51626060.chunk.js.map",
+    "main.js": "/jvoipa/static/js/main.5d8c9c24.chunk.js",
+    "main.js.map": "/jvoipa/static/js/main.5d8c9c24.chunk.js.map",
     "runtime-main.js": "/jvoipa/static/js/runtime-main.d7094485.js",
     "runtime-main.js.map": "/jvoipa/static/js/runtime-main.d7094485.js.map",
     "static/js/2.8ae8a46e.chunk.js": "/jvoipa/static/js/2.8ae8a46e.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.d7094485.js",
     "static/js/2.8ae8a46e.chunk.js",
     "static/css/main.a617e044.chunk.css",
-    "static/js/main.51626060.chunk.js"
+    "static/js/main.5d8c9c24.chunk.js"
   ]
 }
