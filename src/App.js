@@ -51,6 +51,7 @@ import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
 import FeedbackTwoToneIcon from '@material-ui/icons/FeedbackTwoTone';
 import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
 import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
+import CopyrightTwoToneIcon from "@material-ui/icons/CopyrightTwoTone";
 
 import { alpha, makeStyles } from "@material-ui/core/styles";
 
@@ -73,8 +74,8 @@ export function FeedbackFormDialog() {
 
   return (
     <div>
-      <IconButton  color="action" onClick={handleClickOpen}>
-              <FeedbackTwoToneIcon />
+      <IconButton color="action" onClick={handleClickOpen}>
+        <FeedbackTwoToneIcon />
       </IconButton>
 
       <Dialog
@@ -83,7 +84,7 @@ export function FeedbackFormDialog() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-          <iframe src = "https://docs.google.com/forms/d/e/1FAIpQLSfCD3hg_ACPlpMnPdf_DyKiAk4uofXhwlcreVrR203JoyI6dA/viewform?embedded=true" width = "500" height = "3062" frameborder = "0" marginheight = "0" marginwidth = "0" > Loading…</iframe>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfCD3hg_ACPlpMnPdf_DyKiAk4uofXhwlcreVrR203JoyI6dA/viewform?embedded=true" width="500" height="3062" frameborder="0" marginheight="0" marginwidth="0" > Loading…</iframe>
         <DialogActions>
           <Button onClick={handleClose} color="primary" autoFocus>
             Fermer
@@ -109,8 +110,8 @@ export function AlertDialog() {
 
   return (
     <div>
-      <IconButton  color="action" onClick={handleClickOpen}>
-              <HelpTwoToneIcon />
+      <IconButton color="action" onClick={handleClickOpen}>
+        <HelpTwoToneIcon />
       </IconButton>
       <Dialog
         open={open}
@@ -144,7 +145,7 @@ export function AlertDialog() {
             version 1.0.0
           </DialogContentText>
           <DialogContentText id="alert-dialog-description4">
-            merci au Dr Flabeau du Centre Hospitalier de la Côte Basque pour l'idée de l'app. 
+            merci au Dr Flabeau du Centre Hospitalier de la Côte Basque pour l'idée de l'app.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -156,6 +157,58 @@ export function AlertDialog() {
     </div>
   );
 }
+
+/////////// COPYRIGHT POP-UP WINDOW
+export function CopyrightDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <IconButton color="action" onClick={handleClickOpen}>
+        <CopyrightTwoToneIcon />
+      </IconButton>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Copyright: logiciel libre"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Cette application est de type "open source" c'est à dire libre de droit.
+          </DialogContentText>
+          <DialogContentText>
+            Copyright (c) 2021 klemousse
+          </DialogContentText>
+          <DialogContentText>
+            Par la présente, une autorisation est accordée gratuitement à toute personne obtenant une copie de ce logiciel et des fichiers de documentation associés (le "Logiciel"), afin de traiter le logiciel sans restriction, y compris, sans limitation, les droits d'utilisation, de copie, de modification et de fusion. , publiez, distribuez, concédez en sous-licence et / ou vendez des copies du logiciel, et autorisez les personnes à qui le logiciel est fourni à le faire, sous réserve des conditions suivantes:
+          </DialogContentText>
+          <DialogContentText>
+            L'avis de copyright ci-dessus et cet avis de permission doivent être inclus dans toutes les copies ou parties substantielles du logiciel.
+          </DialogContentText>
+          <DialogContentText>
+            LE LOGICIEL EST FOURNI "EN L'ETAT", SANS AUCUNE GARANTIE, EXPRESSE OU IMPLICITE, Y COMPRIS DE MANIÈRE NON LIMITÉE À LA GARANTIE DE QUALITÉ MARCHANDE, D'ADÉQUATION À UN USAGE PARTICULIER ET D'INFRACTION. EN AUCUN CAS, LES AUTEURS OU LES TITULAIRES DE COPYRIGHT NE PEUVENT ÊTRE TENUS RESPONSABLES DE TOUTE RÉCLAMATION, DE DOMMAGES OU D'AUTRE RESPONSABILITÉ, QU'IL SOIT PAR UN ACTION DE CONTRAT, DE LORT OU DE AUTRE QUE CE SOIT, OU LIÉ AU LOGICIEL OU À L'UTILISATION OU AUTRE LOGICIEL.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
+
 
 //////////// SQUARES
 class Square extends React.Component {
@@ -311,120 +364,121 @@ class Game extends React.Component {
     const defaultDateTimeValue = defaultDate.getUTCFullYear;
 
     return (
-      <Box  sx={{ flexGrow: 1}}>
+      <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2}}>
+            <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
               <VisibilityTwoToneIcon />
             </IconButton>
             <Typography variant="h6" >JVoiPa</Typography>
             <Box sx={{ flexGrow: 1 }} />
             <FeedbackFormDialog />
             <AlertDialog />
+            <CopyrightDialog />
           </Toolbar>
-          
+
         </AppBar>
 
         <Container className="game" maxWidth="xl">
-        <Grid
-          container
-          spacing={3}
-          zIndex={4}
-          style={{
-            height: 40,
-            position: "fixed",
-            bottom: 70,
-            zIndex: 3
-          }}
-        >
-          <Grid item xs={1}>
-            <Fab
-              className="floatingButton"
-              disabled={!this.state.isFirstSquareSet}
-              color="secondary"
-              variant="extended"
-              onClick={() => this.handleUndo()}
-            >
-              <UndoIcon />
-              Annuler
-            </Fab>
-          </Grid>{" "}
-          <Grid item xs={8}></Grid>
-          <Grid item xs={2}>
-            <Fab
-              color="primary"
-              disabled={!this.state.isFirstSquareSet}
-              variant="extended"
-              onClick={() => this.handleAddRandomPoint()}
-            >
-              <AddCircleTwoToneIcon />
-              Ajouter
-            </Fab>
-          </Grid>
-        </Grid>
-
-
-        <Grid container spacing={3}>
-          <Grid item xs={12}></Grid>
-
-          <Grid item xs={3}>
-            <TextField
-              label="distance/écran (cm)"
-              size="small"
-              defaultValue="40"
-              variant="outlined"
-              aria-describedby="my-helper-text"
-            />
-          </Grid>
-          <Grid item xs={3}>
-            <TextField
-              label="taille CB (cases)"
-              size="small"
-              defaultValue="24"
-              variant="outlined"
-              aria-describedby="my-helper-text"
-            />
+          <Grid
+            container
+            spacing={3}
+            zIndex={4}
+            style={{
+              height: 40,
+              position: "fixed",
+              bottom: 70,
+              zIndex: 3
+            }}
+          >
+            <Grid item xs={1}>
+              <Fab
+                className="floatingButton"
+                disabled={!this.state.isFirstSquareSet}
+                color="secondary"
+                variant="extended"
+                onClick={() => this.handleUndo()}
+              >
+                <UndoIcon />
+                Annuler
+              </Fab>
+            </Grid>{" "}
+            <Grid item xs={8}></Grid>
+            <Grid item xs={2}>
+              <Fab
+                color="primary"
+                disabled={!this.state.isFirstSquareSet}
+                variant="extended"
+                onClick={() => this.handleAddRandomPoint()}
+              >
+                <AddCircleTwoToneIcon />
+                Ajouter
+              </Fab>
+            </Grid>
           </Grid>
 
-          <Grid item xs={3}>
-            <TextField
-              id="datetime-local"
-              label="date et heure"
-              type="datetime-local"
-              variant="outlined"
-              size="small"
-              defaultValue={defaultDateTimeValue}
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-          </Grid>
-          <Grid item xs={3}></Grid>
 
-          <Grid item xs={12}>
-            <Typography variant="caption">taille de la grille :</Typography>
-            <Slider
-              onChange={(event, val) => this.setState({ cols: val })}
-              defaultValue={this.state.cols}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="auto"
-              step={250}
-              marks
-              min={250}
-              max={10000}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Board
-              cols={this.state.cols}
-              squares={current.squares}
-              onClick={(i) => this.handleClick(i)}
-            />
-          </Grid>
-        </Grid>
-        
+          <Grid container spacing={3}>
+            <Grid item xs={12}></Grid>
 
-      </Container>
+            <Grid item xs={3}>
+              <TextField
+                label="distance/écran (cm)"
+                size="small"
+                defaultValue="40"
+                variant="outlined"
+                aria-describedby="my-helper-text"
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                label="taille CB (cases)"
+                size="small"
+                defaultValue="24"
+                variant="outlined"
+                aria-describedby="my-helper-text"
+              />
+            </Grid>
+
+            <Grid item xs={3}>
+              <TextField
+                id="datetime-local"
+                label="date et heure"
+                type="datetime-local"
+                variant="outlined"
+                size="small"
+                defaultValue={defaultDateTimeValue}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </Grid>
+            <Grid item xs={3}></Grid>
+
+            <Grid item xs={12}>
+              <Typography variant="caption">taille de la grille :</Typography>
+              <Slider
+                onChange={(event, val) => this.setState({ cols: val })}
+                defaultValue={this.state.cols}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="auto"
+                step={250}
+                marks
+                min={250}
+                max={10000}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Board
+                cols={this.state.cols}
+                squares={current.squares}
+                onClick={(i) => this.handleClick(i)}
+              />
+            </Grid>
+          </Grid>
+
+
+        </Container>
       </Box>
     );
   }
