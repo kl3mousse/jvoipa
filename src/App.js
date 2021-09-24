@@ -55,6 +55,11 @@ import CopyrightTwoToneIcon from "@material-ui/icons/CopyrightTwoTone";
 
 import { alpha, makeStyles } from "@material-ui/core/styles";
 
+// Google Analytics
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-208517761-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 const NB_COLS = 2000;
 const NB_ROWS = 1;
 const COLOR1 = "red";
