@@ -40,6 +40,7 @@ import {
   TextField
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
+import Box from "@material-ui/core/Box";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -47,6 +48,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 import UndoIcon from "@material-ui/icons/Undo";
 import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
+import FeedbackTwoToneIcon from '@material-ui/icons/FeedbackTwoTone';
+import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
 import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
 
 import { alpha, makeStyles } from "@material-ui/core/styles";
@@ -56,6 +59,43 @@ const NB_ROWS = 1;
 const COLOR1 = "red";
 const COLOR2 = "purple";
 
+/////////// FEEDBACK FORM
+export function FeedbackFormDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <IconButton  color="action" onClick={handleClickOpen}>
+              <FeedbackTwoToneIcon />
+      </IconButton>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+          <iframe src = "https://docs.google.com/forms/d/e/1FAIpQLSfCD3hg_ACPlpMnPdf_DyKiAk4uofXhwlcreVrR203JoyI6dA/viewform?embedded=true" width = "500" height = "3062" frameborder = "0" marginheight = "0" marginwidth = "0" > Loading…</iframe>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
+
+
+/////////// INFORMATION POP-UP WINDOW
 export function AlertDialog() {
   const [open, setOpen] = React.useState(true);
 
@@ -69,9 +109,9 @@ export function AlertDialog() {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        info
-      </Button>
+      <IconButton  color="action" onClick={handleClickOpen}>
+              <HelpTwoToneIcon />
+      </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -102,6 +142,9 @@ export function AlertDialog() {
           </DialogContentText>
           <DialogContentText id="alert-dialog-description3">
             version 1.0.0
+          </DialogContentText>
+          <DialogContentText id="alert-dialog-description4">
+            merci au Dr Flabeau du Centre Hospitalier de la Côte Basque pour l'idée de l'app. 
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -169,7 +212,7 @@ class Board extends React.Component {
         key={cell_id}
         color={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
-        //onClick={() => this.handleClick(row + this.state.board_nb_cols * col)}
+      //onClick={() => this.handleClick(row + this.state.board_nb_cols * col)}
       />
     );
   }
@@ -268,7 +311,21 @@ class Game extends React.Component {
     const defaultDateTimeValue = defaultDate.getUTCFullYear;
 
     return (
-      <Container className="game" maxWidth="xl">
+      <Box  sx={{ flexGrow: 1}}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2}}>
+              <VisibilityTwoToneIcon />
+            </IconButton>
+            <Typography variant="h6" >JVoiPa</Typography>
+            <Box sx={{ flexGrow: 1 }} />
+            <FeedbackFormDialog />
+            <AlertDialog />
+          </Toolbar>
+          
+        </AppBar>
+
+        <Container className="game" maxWidth="xl">
         <Grid
           container
           spacing={3}
@@ -306,14 +363,6 @@ class Game extends React.Component {
           </Grid>
         </Grid>
 
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <VisibilityTwoToneIcon />
-            </IconButton>
-            <Typography variant="h5">JVoiPa</Typography>
-          </Toolbar>
-        </AppBar>
 
         <Grid container spacing={3}>
           <Grid item xs={12}></Grid>
@@ -373,8 +422,10 @@ class Game extends React.Component {
             />
           </Grid>
         </Grid>
-        <AlertDialog />
+        
+
       </Container>
+      </Box>
     );
   }
 }
