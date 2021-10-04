@@ -27,6 +27,9 @@ export default App;
 
 import "./styles.css";
 import React from "react";
+//import ReactDOM from 'react-dom'
+import Favicon from 'react-favicon'
+
 import {
   AppBar,
   Toolbar,
@@ -203,6 +206,9 @@ export function CopyrightDialog() {
           </DialogContentText>
           <DialogContentText>
             LE LOGICIEL EST FOURNI "EN L'ETAT", SANS AUCUNE GARANTIE, EXPRESSE OU IMPLICITE, Y COMPRIS DE MANIÈRE NON LIMITÉE À LA GARANTIE DE QUALITÉ MARCHANDE, D'ADÉQUATION À UN USAGE PARTICULIER ET D'INFRACTION. EN AUCUN CAS, LES AUTEURS OU LES TITULAIRES DE COPYRIGHT NE PEUVENT ÊTRE TENUS RESPONSABLES DE TOUTE RÉCLAMATION, DE DOMMAGES OU D'AUTRE RESPONSABILITÉ, QU'IL SOIT PAR UN ACTION DE CONTRAT, DE LORT OU DE AUTRE QUE CE SOIT, OU LIÉ AU LOGICIEL OU À L'UTILISATION OU AUTRE LOGICIEL.
+          </DialogContentText>
+          <DialogContentText>
+          <a href="https://icons8.com/icon/mHBAv5xJ2dcq/eye">Eye icon by Icons8</a>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -529,6 +535,7 @@ export default function App() {
 
   //           <span>{`${appWidth}`}</span>
   return <Box>
+    <Favicon url='https://img.icons8.com/plumpy/24/000000/visible--v1.png' />
            <Game w={{appWidth}} />
          </Box>;
 }
