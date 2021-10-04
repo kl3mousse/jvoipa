@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/jvoipa/static/css/main.b5d4b912.chunk.css",
-    "main.js": "/jvoipa/static/js/main.ea91bdda.chunk.js",
-    "main.js.map": "/jvoipa/static/js/main.ea91bdda.chunk.js.map",
+    "main.js": "/jvoipa/static/js/main.d1182c0d.chunk.js",
+    "main.js.map": "/jvoipa/static/js/main.d1182c0d.chunk.js.map",
     "runtime-main.js": "/jvoipa/static/js/runtime-main.9aeb5629.js",
     "runtime-main.js.map": "/jvoipa/static/js/runtime-main.9aeb5629.js.map",
-    "static/js/2.6cab7798.chunk.js": "/jvoipa/static/js/2.6cab7798.chunk.js",
-    "static/js/2.6cab7798.chunk.js.map": "/jvoipa/static/js/2.6cab7798.chunk.js.map",
+    "static/js/2.4911216c.chunk.js": "/jvoipa/static/js/2.4911216c.chunk.js",
+    "static/js/2.4911216c.chunk.js.map": "/jvoipa/static/js/2.4911216c.chunk.js.map",
     "index.html": "/jvoipa/index.html",
     "static/css/main.b5d4b912.chunk.css.map": "/jvoipa/static/css/main.b5d4b912.chunk.css.map",
-    "static/js/2.6cab7798.chunk.js.LICENSE.txt": "/jvoipa/static/js/2.6cab7798.chunk.js.LICENSE.txt"
+    "static/js/2.4911216c.chunk.js.LICENSE.txt": "/jvoipa/static/js/2.4911216c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.9aeb5629.js",
-    "static/js/2.6cab7798.chunk.js",
+    "static/js/2.4911216c.chunk.js",
     "static/css/main.b5d4b912.chunk.css",
-    "static/js/main.ea91bdda.chunk.js"
+    "static/js/main.d1182c0d.chunk.js"
   ]
 }
