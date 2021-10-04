@@ -37,7 +37,8 @@ import {
   Slider,
   Grid,
   Fab,
-  TextField
+  TextField,
+  useMediaQuery
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import Box from "@material-ui/core/Box";
@@ -53,7 +54,7 @@ import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
 import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
 import CopyrightTwoToneIcon from "@material-ui/icons/CopyrightTwoTone";
 
-import { alpha, makeStyles } from "@material-ui/core/styles";
+import { alpha, makeStyles, ThemeProvider, useTheme, createTheme } from "@material-ui/core/styles";
 
 // Google Analytics
 import ReactGA from 'react-ga';
@@ -147,7 +148,7 @@ export function AlertDialog() {
             voir l'évolution de votre déficit, par exemple toutes les semaines.
           </DialogContentText>
           <DialogContentText id="alert-dialog-description3">
-            version 1.0.0
+            version 1.1.0
           </DialogContentText>
           <DialogContentText id="alert-dialog-description4">
             merci au Dr Flabeau du Centre Hospitalier de la Côte Basque pour l'idée de l'app.
@@ -243,14 +244,16 @@ class Square extends React.Component {
   }
 }
 
+
 //////////// BOARD
 class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      board_nb_rows: NB_ROWS,
-      board_nb_cols: NB_COLS,
-      squares: Array(NB_ROWS * NB_COLS).fill(null)
+      //board_nb_rows: NB_ROWS,
+      //board_nb_cols: NB_COLS,
+//      squares: Array(NB_ROWS * NB_COLS).fill(null)
+      squares: Array(this.props.rows * this.props.cols).fill(null)
     };
   }
 
@@ -281,7 +284,7 @@ class Board extends React.Component {
     var i = 0;
     var j = 0;
 
-    for (j = 0; j < this.state.board_nb_rows; j++) {
+    for (j = 0; j < this.props.rows; j++) {
       for (i = 0; i < this.props.cols; i++) {
         var jsx_cellContent = this.renderSquare(i, j);
         row.push(jsx_cellContent);
@@ -319,6 +322,23 @@ class Game extends React.Component {
       ],
       isFirstSquareSet: false
     };
+  }
+
+  targetNbOfRows() {
+    return 1;
+  }
+
+  targetNbOfCols() {
+    var c = 0;
+    switch(this.props.w.appWidth) {
+      case 'xl': c=6000; break;
+      case 'lg': c=3500; break;
+      case 'md': c=2500; break;
+      case 'sm': c=1700; break;
+      case 'xs': c=1000; break;
+      default: c = 10;
+    }
+    return c;
   }
 
   handleClick(i) {
@@ -460,7 +480,7 @@ class Game extends React.Component {
             </Grid>
             <Grid item xs={3}></Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={12} hidden='true'>
               <Typography variant="caption">taille de la grille :</Typography>
               <Slider
                 onChange={(event, val) => this.setState({ cols: val })}
@@ -475,7 +495,9 @@ class Game extends React.Component {
             </Grid>
             <Grid item xs={12}>
               <Board
-                cols={this.state.cols}
+                rows={this.targetNbOfRows()}
+                cols={this.targetNbOfCols()}
+//                cols={this.state.cols}
                 squares={current.squares}
                 onClick={(i) => this.handleClick(i)}
               />
@@ -489,6 +511,24 @@ class Game extends React.Component {
   }
 }
 //
+
+function useWidth() {
+  const theme = useTheme();
+  const keys = [...theme.breakpoints.keys].reverse();
+  return (
+    keys.reduce((output, key) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const matches = useMediaQuery(theme.breakpoints.up(key));
+      return !output && matches ? key : output;
+    }, null) || 'xs'
+  );
+}
+
 export default function App() {
-  return <Game />;
+  const appWidth = useWidth();
+
+  //           <span>{`${appWidth}`}</span>
+  return <Box>
+           <Game w={{appWidth}} />
+         </Box>;
 }
