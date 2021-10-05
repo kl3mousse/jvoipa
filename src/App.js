@@ -41,7 +41,8 @@ import {
   Grid,
   Fab,
   TextField,
-  useMediaQuery
+  useMediaQuery,
+  Tooltip
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import Box from "@material-ui/core/Box";
@@ -151,7 +152,7 @@ export function AlertDialog() {
             voir l'évolution de votre déficit, par exemple toutes les semaines.
           </DialogContentText>
           <DialogContentText id="alert-dialog-description3">
-            version 1.1.0
+            version 1.2.0
           </DialogContentText>
           <DialogContentText id="alert-dialog-description4">
             merci au Dr Flabeau du Centre Hospitalier de la Côte Basque pour l'idée de l'app.
@@ -208,7 +209,8 @@ export function CopyrightDialog() {
             LE LOGICIEL EST FOURNI "EN L'ETAT", SANS AUCUNE GARANTIE, EXPRESSE OU IMPLICITE, Y COMPRIS DE MANIÈRE NON LIMITÉE À LA GARANTIE DE QUALITÉ MARCHANDE, D'ADÉQUATION À UN USAGE PARTICULIER ET D'INFRACTION. EN AUCUN CAS, LES AUTEURS OU LES TITULAIRES DE COPYRIGHT NE PEUVENT ÊTRE TENUS RESPONSABLES DE TOUTE RÉCLAMATION, DE DOMMAGES OU D'AUTRE RESPONSABILITÉ, QU'IL SOIT PAR UN ACTION DE CONTRAT, DE LORT OU DE AUTRE QUE CE SOIT, OU LIÉ AU LOGICIEL OU À L'UTILISATION OU AUTRE LOGICIEL.
           </DialogContentText>
           <DialogContentText>
-          <a href="https://icons8.com/icon/mHBAv5xJ2dcq/eye">Eye icon by Icons8</a>
+            credits: icône de l'app tirée de...
+            <a href="https://icons8.com/icon/mHBAv5xJ2dcq/eye">Icons8</a>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -258,7 +260,7 @@ class Board extends React.Component {
     this.state = {
       //board_nb_rows: NB_ROWS,
       //board_nb_cols: NB_COLS,
-//      squares: Array(NB_ROWS * NB_COLS).fill(null)
+      //      squares: Array(NB_ROWS * NB_COLS).fill(null)
       squares: Array(this.props.rows * this.props.cols).fill(null)
     };
   }
@@ -326,7 +328,8 @@ class Game extends React.Component {
           squares: Array(NB_ROWS * NB_COLS).fill(null)
         }
       ],
-      isFirstSquareSet: false
+      isFirstSquareSet: false,
+      nbClickedBoxes: 0
     };
   }
 
@@ -336,21 +339,27 @@ class Game extends React.Component {
 
   targetNbOfCols() {
     var c = 0;
-    switch(this.props.w.appWidth) {
-      case 'xl': c=6000; break;
-      case 'lg': c=3500; break;
-      case 'md': c=2500; break;
-      case 'sm': c=1700; break;
-      case 'xs': c=1000; break;
+    switch (this.props.w.appWidth) {
+      case 'xl': c = 6000; break;
+      case 'lg': c = 3500; break;
+      case 'md': c = 2500; break;
+      case 'sm': c = 1700; break;
+      case 'xs': c = 1000; break;
       default: c = 10;
     }
     return c;
+  }
+
+  numberOfColouredBoxes() {
+
+    return (this.state.nbClickedBoxes)
   }
 
   handleClick(i) {
     const history = this.state.history;
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+    this.state.nbClickedBoxes++;
 
     if (this.state.isFirstSquareSet) {
       squares[i] = COLOR2;
@@ -370,6 +379,7 @@ class Game extends React.Component {
   handleUndo() {
     var boardHistory = this.state.history;
     boardHistory.pop(); // removes last element from array :)
+    this.state.nbClickedBoxes--;
     let isFirstSquareSet = false;
     if (boardHistory.length === 1) {
       isFirstSquareSet = false;
@@ -452,25 +462,22 @@ class Game extends React.Component {
           <Grid container spacing={3}>
             <Grid item xs={12}></Grid>
 
-            <Grid item xs={3}>
-              <TextField
-                label="distance/écran (cm)"
-                size="small"
-                defaultValue="40"
-                variant="outlined"
-                aria-describedby="my-helper-text"
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextField
-                label="taille CB (cases)"
-                size="small"
-                defaultValue="24"
-                variant="outlined"
-                aria-describedby="my-helper-text"
-              />
-            </Grid>
+            <Grid item xs={2}>
+              <Button
+                variant="outlined" color="secondary"
+              //className="square"
+              >
+                zones déficitaires : {
+                  (() => {
+                    switch (this.state.nbClickedBoxes) {
+                      case 0: return 0;
+                      case 1: return 0;
+                      default: return this.state.nbClickedBoxes - 1;
+                    }
+                  })()}
+              </Button>
 
+            </Grid>
             <Grid item xs={3}>
               <TextField
                 id="datetime-local"
@@ -478,13 +485,26 @@ class Game extends React.Component {
                 type="datetime-local"
                 variant="outlined"
                 size="small"
-                defaultValue={defaultDateTimeValue}
+                //defaultValue={defaultDateTimeValue}
+                //defaultValue={new Date().getFullYear()+"-02-02T21:11:22"}
+                defaultValue={new Date().toJSON().slice(0, 19)}
                 InputLabelProps={{
                   shrink: true
                 }}
               />
             </Grid>
-            <Grid item xs={3}></Grid>
+            <Grid item xs={6}>
+            <Tooltip title="distance à laquelle vous vous tenez de l'écran, nombre de cases pour faire la largeur d'une carte bleue, appareil utilisé, ...">
+              <TextField
+                fullWidth
+                label="commentaires"
+                size="small"
+                //defaultValue="40"
+                variant="outlined"
+                aria-describedby="my-helper-text"
+              />
+              </Tooltip>
+            </Grid>
 
             <Grid item xs={12} hidden='true'>
               <Typography variant="caption">taille de la grille :</Typography>
@@ -503,7 +523,7 @@ class Game extends React.Component {
               <Board
                 rows={this.targetNbOfRows()}
                 cols={this.targetNbOfCols()}
-//                cols={this.state.cols}
+                //                cols={this.state.cols}
                 squares={current.squares}
                 onClick={(i) => this.handleClick(i)}
               />
@@ -512,7 +532,7 @@ class Game extends React.Component {
 
 
         </Container>
-      </Box>
+      </Box >
     );
   }
 }
@@ -536,6 +556,6 @@ export default function App() {
   //           <span>{`${appWidth}`}</span>
   return <Box>
     <Favicon url='https://img.icons8.com/plumpy/24/000000/visible--v1.png' />
-           <Game w={{appWidth}} />
-         </Box>;
+    <Game w={{ appWidth }} />
+  </Box>;
 }
