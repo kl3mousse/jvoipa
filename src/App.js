@@ -26,7 +26,7 @@ export default App;
 */
 
 import "./styles.css";
-import React from "react";
+import React, { useEffect } from "react";
 //import ReactDOM from 'react-dom'
 import Favicon from 'react-favicon'
 
@@ -552,8 +552,12 @@ function useWidth() {
 
 export default function App() {
   const appWidth = useWidth();
-
-  //           <span>{`${appWidth}`}</span>
+  
+  // set the App title (the one visible in browser tabs)
+  useEffect(() => {
+    document.title = "JvoiPa"
+  }, [])
+  
   return <Box>
     <Favicon url='https://img.icons8.com/plumpy/24/000000/visible--v1.png' />
     <Game w={{ appWidth }} />
