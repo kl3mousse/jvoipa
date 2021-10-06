@@ -413,7 +413,7 @@ class Game extends React.Component {
             </IconButton>
             <Typography variant="h6" >JVoiPa</Typography>
             <Box sx={{ flexGrow: 1 }} />
-            <FeedbackFormDialog />
+            <Tooltip title="xxx"><FeedbackFormDialog /></Tooltip>
             <AlertDialog />
             <CopyrightDialog />
           </Toolbar>
@@ -423,6 +423,7 @@ class Game extends React.Component {
         <Container className="game" maxWidth="xl">
           <Grid
             container
+            justifyContent="space-between"
             spacing={3}
             zIndex={4}
             style={{
@@ -432,7 +433,7 @@ class Game extends React.Component {
               zIndex: 3
             }}
           >
-            <Grid item xs={1}>
+            <Grid item xs={5} sm={4} md={3} lg={2} xl={1}>
               <Fab
                 className="floatingButton"
                 disabled={!this.state.isFirstSquareSet}
@@ -444,8 +445,8 @@ class Game extends React.Component {
                 Annuler
               </Fab>
             </Grid>{" "}
-            <Grid item xs={8}></Grid>
-            <Grid item xs={2}>
+            <Grid item xs sm md lg xl></Grid>
+            <Grid item xs={5} sm={4} md={3} lg={2} xl={2}>
               <Fab
                 color="primary"
                 disabled={!this.state.isFirstSquareSet}
@@ -459,12 +460,20 @@ class Game extends React.Component {
           </Grid>
 
 
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={1}
+            direction="row"
+            columnSpacing={{ xs: 1, sm: 1, md: 1 }}
+            justifyContent="space-between"
+            alignItems="flex-start"
+          >
             <Grid item xs={12}></Grid>
 
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={5} md={3} lg={3} xl={2}>
               <Button
-                variant="outlined" color="secondary"
+                variant="outlined"
+                color="secondary"
               //className="square"
               >
                 zones déficitaires : {
@@ -478,7 +487,7 @@ class Game extends React.Component {
               </Button>
 
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={5} md={4} lg={3} xl={2}>
               <TextField
                 id="datetime-local"
                 label="date et heure"
@@ -493,19 +502,19 @@ class Game extends React.Component {
                 }}
               />
             </Grid>
-            <Grid item xs={6}>
-            <Tooltip title="distance à laquelle vous vous tenez de l'écran, nombre de cases pour faire la largeur d'une carte bleue, appareil utilisé, ...">
-              <TextField
-                fullWidth
-                label="commentaires"
-                size="small"
-                //defaultValue="40"
-                variant="outlined"
-                aria-describedby="my-helper-text"
-              />
+
+            <Grid item xs={12} sm={12} md={12} lg xl>
+              <Tooltip title="distance à laquelle vous vous tenez de l'écran, nombre de cases pour faire la largeur d'une carte bleue, appareil utilisé, ...">
+                <TextField
+                  fullWidth
+                  label="commentaires"
+                  size="small"
+                  //defaultValue="40"
+                  variant="outlined"
+                  aria-describedby="my-helper-text"
+                />
               </Tooltip>
             </Grid>
-
             <Grid item xs={12} hidden='true'>
               <Typography variant="caption">taille de la grille :</Typography>
               <Slider
@@ -552,12 +561,12 @@ function useWidth() {
 
 export default function App() {
   const appWidth = useWidth();
-  
+
   // set the App title (the one visible in browser tabs)
   useEffect(() => {
     document.title = "JvoiPa"
   }, [])
-  
+
   return <Box>
     <Favicon url='https://img.icons8.com/plumpy/24/000000/visible--v1.png' />
     <Game w={{ appWidth }} />
