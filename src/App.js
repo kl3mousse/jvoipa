@@ -413,7 +413,7 @@ class Game extends React.Component {
             </IconButton>
             <Typography variant="h6" >JVoiPa</Typography>
             <Box sx={{ flexGrow: 1 }} />
-            <Tooltip title="xxx"><FeedbackFormDialog /></Tooltip>
+            <FeedbackFormDialog />
             <AlertDialog />
             <CopyrightDialog />
           </Toolbar>
@@ -476,12 +476,12 @@ class Game extends React.Component {
                 color="secondary"
               //className="square"
               >
-                zones déficitaires : {
+                {
                   (() => {
                     switch (this.state.nbClickedBoxes) {
-                      case 0: return 0;
-                      case 1: return 0;
-                      default: return this.state.nbClickedBoxes - 1;
+                      case 0: return "choisissez la case à fixer";
+                      case 1: return "ajoutez votre premier point";
+                      default: return "zones déficitaires : " + (this.state.nbClickedBoxes - 1);
                     }
                   })()}
               </Button>
