@@ -66,7 +66,7 @@ export function FeedbackFormDialog() {
   return (
     <div>
       <IconButton color="action" onClick={handleClickOpen}>
-        <FeedbackTwoToneIcon />
+      <Tooltip title="bug ? suggestion d'amélioration ? c'est par ici !"><FeedbackTwoToneIcon /></Tooltip>
       </IconButton>
 
       <Dialog
@@ -102,7 +102,7 @@ export function AlertDialog() {
   return (
     <div>
       <IconButton color="action" onClick={handleClickOpen}>
-        <HelpTwoToneIcon />
+      <Tooltip title="Information sur l'application"><HelpTwoToneIcon /></Tooltip>
       </IconButton>
       <Dialog
         open={open}
@@ -164,7 +164,7 @@ export function CopyrightDialog() {
   return (
     <div>
       <IconButton color="action" onClick={handleClickOpen}>
-        <CopyrightTwoToneIcon />
+      <Tooltip title="détails sur le droit d'usage"><CopyrightTwoToneIcon /></Tooltip>
       </IconButton>
       <Dialog
         open={open}
@@ -216,7 +216,7 @@ export function ShareDialog() {
   return (
     <div>
       <IconButton color="action" onClick={handleClickOpen}>
-        <ShareIcon />
+      <Tooltip title="partager le lien ou le QR code de l'app"><ShareIcon /></Tooltip>
       </IconButton>
       <Dialog
         open={open}
@@ -598,7 +598,7 @@ export default function App() {
           <Typography variant="h6" >JVoiPa</Typography>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton onClick={downloadScreenshot} edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <SaveTwoToneIcon />
+            <Tooltip title="Prendre une copie d'écran et la sauvegarder en tant qu'image"><SaveTwoToneIcon /></Tooltip>
           </IconButton>
           <FeedbackFormDialog />
           <AlertDialog />
