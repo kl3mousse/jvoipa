@@ -1,31 +1,10 @@
-/*import logo from './logo.svg';
-import './App.css';
+/****************************/
+/********** JvoiPa **********/
+/****************************/
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload :)
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
-*/
 
 import "./styles.css";
+import qrcodeapplink from "./qrcode-app-link.gif"
 import React, { useEffect } from "react";
 //import ReactDOM from 'react-dom'
 import Favicon from 'react-favicon'
@@ -42,7 +21,8 @@ import {
   Fab,
   TextField,
   useMediaQuery,
-  Tooltip
+  Tooltip,
+  Card, CardContent, CardMedia, Link
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import Box from "@material-ui/core/Box";
@@ -57,6 +37,7 @@ import FeedbackTwoToneIcon from '@material-ui/icons/FeedbackTwoTone';
 import HelpTwoToneIcon from '@material-ui/icons/HelpTwoTone';
 import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
 import CopyrightTwoToneIcon from "@material-ui/icons/CopyrightTwoTone";
+import ShareIcon from '@material-ui/icons/Share';
 
 import { alpha, makeStyles, ThemeProvider, useTheme, createTheme } from "@material-ui/core/styles";
 
@@ -223,6 +204,55 @@ export function CopyrightDialog() {
   );
 }
 
+//////////// SHARE APP DIALOG
+
+export function ShareDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <IconButton color="action" onClick={handleClickOpen}>
+        <ShareIcon />
+      </IconButton>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Partager cette App..."}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Vous pouvez librement partager cette application via le QR code ci-dessous, ou avec ce lien : <Link href="https://kl3mousse.github.io/jvoipa/" rel="noopener" underline="always">
+              {'kl3mousse.github.io/jvoipa'}
+            </Link>
+          </DialogContentText>
+          <Card >
+            <CardMedia sx={{ maxWidth: 96 }}
+              component="img"
+              width="64"
+              image={qrcodeapplink}
+              alt="QR code to get the app link"
+            />
+          </Card>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
 
 //////////// SQUARES
 class Square extends React.Component {
@@ -416,6 +446,7 @@ class Game extends React.Component {
             <FeedbackFormDialog />
             <AlertDialog />
             <CopyrightDialog />
+            <ShareDialog />
           </Toolbar>
 
         </AppBar>
