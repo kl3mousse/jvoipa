@@ -364,12 +364,12 @@ class Game extends React.Component {
     var newClickedBoxesCounter = this.state.nbClickedBoxes;
 
     if (this.state.isFirstSquareSet) {
-      if(squares[i] == COLOR_SET){
+      if(squares[i] === COLOR_SET){
         squares[i] = COLOR_BACKGROUND;
         newClickedBoxesCounter--;
       }
       else{
-        if(squares[i] == COLOR_CENTER){
+        if(squares[i] === COLOR_CENTER){
         }
         else{
           squares[i] = COLOR_SET;
@@ -400,7 +400,7 @@ class Game extends React.Component {
     const squares = current.squares.slice();
     var newClickedBoxesCounter = 0;
     for(var i=0;i<squares.length;i++){
-      if ((squares[i]==COLOR_SET)+(squares[i]==COLOR_CENTER)){newClickedBoxesCounter++}
+      if ((squares[i]===COLOR_SET)+(squares[i]===COLOR_CENTER)){newClickedBoxesCounter++}
     }
 
     let isFirstSquareSet = false;
