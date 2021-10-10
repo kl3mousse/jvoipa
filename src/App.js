@@ -8,21 +8,8 @@ import qrcodeapplink from "./qrcode-app-link.gif";
 import React, { createRef } from "react";
 import { useScreenshot, createFileName } from "use-react-screenshot";
 
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Container,
-  Slider,
-  Grid,
-  Fab,
-  TextField,
-  useMediaQuery,
-  Tooltip,
-  Card, CardMedia, Link
-} from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Button, IconButton, Container, Slider, Grid, Fab, TextField, useMediaQuery, Tooltip, Card, CardMedia, Link }
+  from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import Box from "@material-ui/core/Box";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -48,8 +35,10 @@ ReactGA.pageview(window.location.pathname + window.location.search);
 
 const NB_COLS = 2000;
 const NB_ROWS = 1;
-const COLOR1 = "red";
-const COLOR2 = "purple";
+
+const COLOR_CENTER = "red";
+const COLOR_SET = "purple";
+const COLOR_BACKGROUND = "";
 
 /////////// FEEDBACK FORM
 export function FeedbackFormDialog() {
@@ -66,7 +55,7 @@ export function FeedbackFormDialog() {
   return (
     <div>
       <IconButton color="action" onClick={handleClickOpen}>
-      <Tooltip title="bug ? suggestion d'amélioration ? c'est par ici !"><FeedbackTwoToneIcon /></Tooltip>
+        <Tooltip title="bug ? suggestion d'amélioration ? c'est par ici !"><FeedbackTwoToneIcon /></Tooltip>
       </IconButton>
 
       <Dialog
@@ -102,7 +91,7 @@ export function AlertDialog() {
   return (
     <div>
       <IconButton color="action" onClick={handleClickOpen}>
-      <Tooltip title="Information sur l'application"><HelpTwoToneIcon /></Tooltip>
+        <Tooltip title="Information sur l'application"><HelpTwoToneIcon /></Tooltip>
       </IconButton>
       <Dialog
         open={open}
@@ -164,7 +153,7 @@ export function CopyrightDialog() {
   return (
     <div>
       <IconButton color="action" onClick={handleClickOpen}>
-      <Tooltip title="détails sur le droit d'usage"><CopyrightTwoToneIcon /></Tooltip>
+        <Tooltip title="détails sur le droit d'usage"><CopyrightTwoToneIcon /></Tooltip>
       </IconButton>
       <Dialog
         open={open}
@@ -216,7 +205,7 @@ export function ShareDialog() {
   return (
     <div>
       <IconButton color="action" onClick={handleClickOpen}>
-      <Tooltip title="partager le lien ou le QR code de l'app"><ShareIcon /></Tooltip>
+        <Tooltip title="partager le lien ou le QR code de l'app"><ShareIcon /></Tooltip>
       </IconButton>
       <Dialog
         open={open}
@@ -257,9 +246,7 @@ class Square extends React.Component {
 
     var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     var chaactersLength = characters.length;
-    var randomChar = characters.charAt(
-      Math.floor(Math.random() * chaactersLength)
-    );
+    var randomChar = characters.charAt(Math.floor(Math.random() * chaactersLength));
     this.state = {
       text: randomChar
     };
@@ -284,30 +271,19 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //board_nb_rows: NB_ROWS,
-      //board_nb_cols: NB_COLS,
-      //      squares: Array(NB_ROWS * NB_COLS).fill(null)
       squares: Array(this.props.rows * this.props.cols).fill(null)
     };
   }
 
-  /*handleClick(i) {
-    const squares = this.props.squares.slice();
-    squares[i] = "red";
-    this.setState({ squares: squares });
-  }*/
-
   renderSquare(row, col) {
     var i = row + this.props.cols * col;
     var cell_id = "cell-" + i;
-    //const squares = this.state.squares.slice();
 
     return (
       <Square
         key={cell_id}
         color={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
-      //onClick={() => this.handleClick(row + this.state.board_nb_cols * col)}
       />
     );
   }
@@ -385,12 +361,26 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[history.length - 1];
     const squares = current.squares.slice();
+    var newClickedBoxesCounter = this.state.nbClickedBoxes;
 
     if (this.state.isFirstSquareSet) {
-      squares[i] = COLOR2;
+      if(squares[i] == COLOR_SET){
+        squares[i] = COLOR_BACKGROUND;
+        newClickedBoxesCounter--;
+      }
+      else{
+        if(squares[i] == COLOR_CENTER){
+        }
+        else{
+          squares[i] = COLOR_SET;
+          newClickedBoxesCounter++;  
+        }
+      }
     } else {
-      squares[i] = COLOR1;
+      squares[i] = COLOR_CENTER;
+      newClickedBoxesCounter++;
     }
+
     this.setState({
       history: history.concat([
         {
@@ -398,13 +388,20 @@ class Game extends React.Component {
         }
       ]),
       isFirstSquareSet: true,
-      nbClickedBoxes: this.state.nbClickedBoxes + 1
+      nbClickedBoxes: newClickedBoxesCounter
     });
   }
 
   handleUndo() {
     var boardHistory = this.state.history;
     boardHistory.pop(); // removes last element from array :)
+
+    const current = boardHistory[boardHistory.length - 1];
+    const squares = current.squares.slice();
+    var newClickedBoxesCounter = 0;
+    for(var i=0;i<squares.length;i++){
+      if ((squares[i]==COLOR_SET)+(squares[i]==COLOR_CENTER)){newClickedBoxesCounter++}
+    }
 
     let isFirstSquareSet = false;
     if (boardHistory.length === 1) {
@@ -416,7 +413,8 @@ class Game extends React.Component {
     this.setState({
       history: boardHistory,
       isFirstSquareSet: isFirstSquareSet,
-      nbClickedBoxes: this.state.nbClickedBoxes - 1
+      nbClickedBoxes: newClickedBoxesCounter
+      //this.state.nbClickedBoxes - 1
     });
   }
 
@@ -552,15 +550,14 @@ class Game extends React.Component {
               />
             </Grid>
           </Grid>
-
-
         </Container>
       </Box >
     );
   }
 }
-//
 
+
+//////////// FUNCTION TO DETERMINE SCREEN WIDTH
 function useWidth() {
   const theme = useTheme();
   const keys = [...theme.breakpoints.keys].reverse();
@@ -573,23 +570,23 @@ function useWidth() {
   );
 }
 
+//////////// APP (MAIN)
 export default function App() {
   const appWidth = useWidth();
-  const ref = createRef(null);
-  const [ , takeScreenshot] = useScreenshot();
+  const screenshotRef = createRef(null);
+  const [, takeScreenshot] = useScreenshot();
   //const getImage = () => takeScreenshot(ref.current);
   const download = (image, { name = "JvoiPa-", extension = "jpg" } = {}) => {
     const a = document.createElement("a");
     a.href = image;
-    const timestamp = new Date().toJSON().slice(0, 19); 
-    a.download = createFileName(extension, name + timestamp );
+    const timestamp = new Date().toJSON().slice(0, 19);
+    a.download = createFileName(extension, name + timestamp);
     a.click();
   };
-  const downloadScreenshot = () => takeScreenshot(ref.current).then(download);
+  const downloadScreenshot = () => takeScreenshot(screenshotRef.current).then(download);
 
   return <Box>
-
-    <div ref={ref}>
+    <div ref={screenshotRef}>
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
@@ -605,11 +602,8 @@ export default function App() {
           <CopyrightDialog />
           <ShareDialog />
         </Toolbar>
-
       </AppBar>
       <Game w={{ appWidth }} />
     </div>
-
-
   </Box>;
 }
