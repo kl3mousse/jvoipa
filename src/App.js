@@ -36,9 +36,10 @@ ReactGA.pageview(window.location.pathname + window.location.search);
 const NB_COLS = 2000;
 const NB_ROWS = 1;
 
-const COLOR_CENTER = "red";
+const COLOR_CENTER = "yellow";
 const COLOR_SET = "purple";
 const COLOR_BACKGROUND = "";
+const CHAR_CENTER = "📍";
 
 /////////// FEEDBACK FORM
 export function FeedbackFormDialog() {
@@ -247,16 +248,29 @@ class Square extends React.Component {
     var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     var chaactersLength = characters.length;
     var randomChar = characters.charAt(Math.floor(Math.random() * chaactersLength));
+    
     this.state = {
-      text: randomChar
+      text: randomChar,
+      borderColor: "",
+      borderWidth: 0
     };
   }
 
   render() {
+    // if this is the first box to be clicked: change the text to CHAR_CENTER (emoji for center of vision)
+    if ((this.props.color === COLOR_CENTER)*(this.state.text !== CHAR_CENTER)){
+      this.setState({
+        text: CHAR_CENTER,
+        borderColor: "black",
+        borderWidth: 2
+      })
+      
+    };
+// border: 1px solid #eee;
     return (
       <button
         className="square"
-        style={{ backgroundColor: this.props.color }}
+        style={{ backgroundColor: this.props.color, borderColor: this.state.borderColor, borderWidth: this.state.borderWidth }}
         onClick={() => this.props.onClick()}
       >
         {this.state.text}
@@ -592,7 +606,7 @@ export default function App() {
           <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <VisibilityTwoToneIcon />
           </IconButton>
-          <Typography variant="h6" >JVoiPa</Typography>
+          <Typography variant="h6" >JVoiPa | kl3mousse.github.io/JvoiPa</Typography>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton onClick={downloadScreenshot} edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <Tooltip title="Prendre une copie d'écran et la sauvegarder en tant qu'image"><SaveTwoToneIcon /></Tooltip>
