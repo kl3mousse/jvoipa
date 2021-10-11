@@ -262,7 +262,7 @@ class Square extends React.Component {
       this.setState({
         text: CHAR_CENTER,
         borderColor: "black",
-        borderWidth: 2
+        borderWidth: 1
       })
       
     };
@@ -606,7 +606,12 @@ export default function App() {
           <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <VisibilityTwoToneIcon />
           </IconButton>
-          <Typography variant="h6" >JVoiPa | kl3mousse.github.io/JvoiPa</Typography>
+          <Typography
+            variant="h6"
+            sx={{ display: { xs: 'none', sm: 'none', md: 'block', lg: 'block', xl: 'block' } }}
+          >
+            JVoiPa
+          </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton onClick={downloadScreenshot} edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <Tooltip title="Prendre une copie d'écran et la sauvegarder en tant qu'image"><SaveTwoToneIcon /></Tooltip>
